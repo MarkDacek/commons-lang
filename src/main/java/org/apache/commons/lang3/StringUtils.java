@@ -2483,6 +2483,47 @@ public class StringUtils {
 
         return ret == Integer.MAX_VALUE ? INDEX_NOT_FOUND : ret;
     }
+    
+    
+    /**
+     * <p>Find the first index of any of a set of potential substrings starting at a given index.</p>
+     *
+     * <p>A {@code null} CharSequence will return {@code -1}.
+     * A {@code null} or zero length search array will return {@code -1}.
+     * A {@code null} search array entry will be ignored, but a search
+     * array containing "" will return {@code 0} if {@code str} is not
+     * null. This method uses {@link String#indexOf(String)} if possible.</p>
+     *
+     * <pre>
+     * StringUtils.indexOfAny(null, *, *)                     = -1
+     * StringUtils.indexOfAny(*, *, null)                     = -1
+     * StringUtils.indexOfAny(*, *, [])                       = -1
+     * StringUtils.indexOfAny("zzabyycdxx", 0, ["ab","cd"])   = 2
+     * StringUtils.indexOfAny("zzabyycdxx", 5, ["ab","cd"] )   = 6
+     * StringUtils.indexOfAny("zzabyycdxx", 0, ["cd","ab"])   = 2
+     * StringUtils.indexOfAny("zzabyycdxx", *, ["mn","op"])   = -1
+     * StringUtils.indexOfAny("zzabyycdxx", 0, ["zab","aby"]) = 1
+     * StringUtils.indexOfAny("zzabyycdxx", *, [""])          = 0
+     * StringUtils.indexOfAny("", [""], 0)                    = 0
+     * StringUtils.indexOfAny("", ["a"], *)                   = -1
+     * </pre>
+     *
+     * @param str  the CharSequence to check, may be null
+     * @param searchStrs  the CharSequences to search for, may be null
+     * @param startPos the position to start searching from
+     * @return the first index of any of the searchStrs in str starting at position startPos, -1 if no match
+     * 
+     */
+    public static int indexOfAny(final CharSequence str, final int startPos, final CharSequence... searchStrs) {
+    	if(str == null || searchStrs == null || startPos > str.length()){
+    		return INDEX_NOT_FOUND;
+    	}
+    	int ind = indexOfAny(str.subSequence(startPos, str.length()), searchStrs);
+    	if(ind != INDEX_NOT_FOUND){
+    		ind += startPos;
+    	}
+    	return ind;
+    }
 
     /**
      * <p>Find the latest index of any of a set of potential substrings.</p>

@@ -403,6 +403,19 @@ public class StringUtilsEqualsIndexOfTest  {
         assertEquals(-1, StringUtils.indexOfAny(FOOBAR, new String[] {null}));
         assertEquals(-1, StringUtils.indexOfAny(null, new String[] {null}));
     }
+    
+    @Test
+    public void testIndexOfAnyWithStartPos_StringString(){
+    	assertEquals(-1, StringUtils.indexOfAny(null, 0, (CharSequence[]) null));
+    	assertEquals(-1, StringUtils.indexOfAny(null, 0, "a"));
+    	assertEquals(-1, StringUtils.indexOfAny("abc",  0, (CharSequence[]) null));
+    	assertEquals(-1, StringUtils.indexOfAny("abc",  6, "abc"));
+    	assertEquals(0, StringUtils.indexOfAny("abc", 0, "a", "b", "c"));
+    	assertEquals(1, StringUtils.indexOfAny("abc", 1, "a", "b", "c"));
+    	assertEquals(2, StringUtils.indexOfAny("abc", 2, "a", "b", "c"));
+    	assertEquals(-1, StringUtils.indexOfAny("abcd", 0, "abcde"));
+
+    }
 
     /**
      * See http://www.oracle.com/technetwork/articles/javase/supplementary-142654.html
